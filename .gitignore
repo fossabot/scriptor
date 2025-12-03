@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Scriptor Byproducts
+# For quick testing and local development, Scriptor may generate temporary files and folders.
+# These files and folders are not meant to be tracked by version control.
+scriptor.json
