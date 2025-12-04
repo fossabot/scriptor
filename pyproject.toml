@@ -5,12 +5,14 @@ description = "Scriptor is a open-source CLI tool designed for simple management
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "loguru>=0.7.3",
     "rich>=14.2.0",
     "typer>=0.20.0",
 ]
 
 [dependency-groups]
 dev = [
+    "pre-commit>=4.5.0",
     "ruff>=0.14.6",
     "ty>=0.0.1a27",
 ]
