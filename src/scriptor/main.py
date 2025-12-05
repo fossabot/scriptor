@@ -1,19 +1,40 @@
 import json
 import typer
 import os
+import scriptor.project as project
 from rich import print
 from rich.panel import Panel
 from typing_extensions import Annotated
 from scriptor import __VERSION__, logger
 
 app = typer.Typer(no_args_is_help=True)
+app.add_typer(
+    project.app,
+    name="project",
+    help="Subset of Scriptor commands related to project management.",
+)
 
 
 @app.callback()
-def callback():
+def callback(
+    verbose: Annotated[
+        bool,
+        typer.Option(
+            "--verbose", "-v", help="Enables verbose logging for debugging purposes."
+        ),
+    ] = False,
+):
     """
     Scriptor is a open-source CLI tool designed for simple management of your local and cloud environments tailored to your home-labs or business environments
     """
+    if verbose:
+        # Until a better solution is found, we reconfigure the logger to show debug messages
+        import sys
+
+        logger.remove()
+        logger.add(sys.stderr, level="DEBUG")
+        logger.debug("Verbose logging enabled.")
+        logger.add("scriptor.log", rotation="50 MB", level="DEBUG")
     logger.debug(f"Command invoked running {__VERSION__} version of Scriptor.")
 
 
@@ -40,6 +61,7 @@ def initialize(
     jsonContent = {
         "name": "example-scriptor-project",
         "version": "0.1.0",
+        "developer": "Example Developer",
         "description": "An example Scriptor project initialized using the CLI.",
         "endpoint": "main.py",
         "SCRIPTOR_API_VERSION": "v0",
